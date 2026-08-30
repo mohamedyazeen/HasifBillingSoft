@@ -98,7 +98,7 @@ function ChangePassword() {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/api/auth/change-password",
+        "https://hasifbillingsoft.onrender.com/api/auth/change-password",
         {
           method: "POST",
 

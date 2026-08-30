@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://hasifbillingsoft.onrender.com/api";
 
 export const loginUser = async (userId, password) => {
   const response = await fetch(`${API_URL}/auth/login`, {
