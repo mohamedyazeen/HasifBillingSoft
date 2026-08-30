@@ -63,6 +63,7 @@ app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
     message: "HASIF STORE API is running.",
+    status: "online",
   });
 });
 
@@ -70,40 +71,13 @@ app.get("/", (req, res) => {
    API ROUTES
 ===================================================== */
 
-app.use(
-  "/api/auth",
-  authRoutes
-);
-
-app.use(
-  "/api/products",
-  productRoutes
-);
-
-app.use(
-  "/api/purchases",
-  purchaseRoutes
-);
-
-app.use(
-  "/api/bills",
-  billRoutes
-);
-
-app.use(
-  "/api/customers",
-  customerRoutes
-);
-
-app.use(
-  "/api/suppliers",
-  supplierRoutes
-);
-
-app.use(
-  "/api/settings",
-  settingsRoutes
-);
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/purchases", purchaseRoutes);
+app.use("/api/bills", billRoutes);
+app.use("/api/customers", customerRoutes);
+app.use("/api/suppliers", supplierRoutes);
+app.use("/api/settings", settingsRoutes);
 
 /* =====================================================
    404 HANDLER
@@ -121,23 +95,14 @@ app.use((req, res) => {
    ERROR HANDLER
 ===================================================== */
 
-app.use(
-  (err, req, res, next) => {
-    console.error(
-      "Server Error:",
-      err
-    );
+app.use((err, req, res, next) => {
+  console.error("Server Error:", err);
 
-    res.status(
-      err.status || 500
-    ).json({
-      success: false,
-      message:
-        err.message ||
-        "Internal server error.",
-    });
-  }
-);
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || "Internal server error.",
+  });
+});
 
 /* =====================================================
    CREATE / REPAIR ADMIN USER
@@ -146,84 +111,51 @@ app.use(
 const createAdminUser = async () => {
   try {
     const adminUserId = (
-      process.env.ADMIN_USER_ID ||
-      "hasif@store"
+      process.env.ADMIN_USER_ID || "hasif@store"
     )
       .trim()
       .toLowerCase();
 
     const adminPassword =
-      process.env.ADMIN_PASSWORD ||
-      "12345678";
+      process.env.ADMIN_PASSWORD || "12345678";
 
     /* ===============================================
        FIND ADMIN
     =============================================== */
 
-    const existingAdmin =
-      await User.findOne({
-        userId: adminUserId,
-      });
+    const existingAdmin = await User.findOne({
+      userId: adminUserId,
+    });
 
     /* ===============================================
        ADMIN ALREADY EXISTS
     =============================================== */
 
     if (existingAdmin) {
-
-      /* ---------------------------------------------
-         CHECK PASSWORD HASH
-      --------------------------------------------- */
-
       if (
         !existingAdmin.passwordHash ||
-        typeof existingAdmin.passwordHash !==
-          "string"
+        typeof existingAdmin.passwordHash !== "string"
       ) {
-        console.log(
-          "Admin password hash missing."
+        console.log("Admin password hash missing.");
+        console.log("Repairing admin password...");
+
+        const passwordHash = await bcrypt.hash(
+          adminPassword,
+          12
         );
 
-        console.log(
-          "Repairing admin password..."
-        );
-
-        const passwordHash =
-          await bcrypt.hash(
-            adminPassword,
-            12
-          );
-
-        existingAdmin.passwordHash =
-          passwordHash;
-
-        existingAdmin.role =
-          "admin";
-
-        existingAdmin.active =
-          true;
-
-        existingAdmin.mustChangePassword =
-          true;
+        existingAdmin.passwordHash = passwordHash;
+        existingAdmin.role = "admin";
+        existingAdmin.active = true;
+        existingAdmin.mustChangePassword = true;
 
         await existingAdmin.save();
 
         console.log(
           "Admin password repaired successfully."
         );
-
-        console.log(
-          `User ID: ${adminUserId}`
-        );
-
-        console.log(
-          `Initial password: ${adminPassword}`
-        );
       } else {
-
-        console.log(
-          "Admin user already exists."
-        );
+        console.log("Admin user already exists.");
       }
 
       return;
@@ -233,31 +165,20 @@ const createAdminUser = async () => {
        CREATE NEW ADMIN
     =============================================== */
 
-    console.log(
-      "Creating admin user..."
+    console.log("Creating admin user...");
+
+    const passwordHash = await bcrypt.hash(
+      adminPassword,
+      12
     );
 
-    const passwordHash =
-      await bcrypt.hash(
-        adminPassword,
-        12
-      );
-
-    const admin =
-      new User({
-        userId:
-          adminUserId,
-
-        passwordHash:
-          passwordHash,
-
-        role: "admin",
-
-        active: true,
-
-        mustChangePassword:
-          true,
-      });
+    const admin = new User({
+      userId: adminUserId,
+      passwordHash,
+      role: "admin",
+      active: true,
+      mustChangePassword: true,
+    });
 
     await admin.save();
 
@@ -265,16 +186,7 @@ const createAdminUser = async () => {
       "Admin user created successfully."
     );
 
-    console.log(
-      `User ID: ${adminUserId}`
-    );
-
-    console.log(
-      `Initial password: ${adminPassword}`
-    );
-
   } catch (error) {
-
     console.error(
       "Create Admin Error:",
       error.message
@@ -290,23 +202,17 @@ const createAdminUser = async () => {
 
 const connectDatabase = async () => {
   try {
-
-    const mongoUri =
-      process.env.MONGO_URI;
+    const mongoUri = process.env.MONGO_URI;
 
     if (!mongoUri) {
       throw new Error(
-        "MONGO_URI is missing in .env file."
+        "MONGO_URI is missing in environment variables."
       );
     }
 
-    await mongoose.connect(
-      mongoUri,
-      {
-        serverSelectionTimeoutMS:
-          10000,
-      }
-    );
+    await mongoose.connect(mongoUri, {
+      serverSelectionTimeoutMS: 10000,
+    });
 
     console.log(
       "✓ Database connected successfully"
@@ -319,16 +225,12 @@ const connectDatabase = async () => {
     await createAdminUser();
 
     return true;
-
   } catch (error) {
-
     console.error(
       "✗ Database connection failed"
     );
 
-    console.error(
-      error.message
-    );
+    console.error(error.message);
 
     return false;
   }
@@ -339,7 +241,6 @@ const connectDatabase = async () => {
 ===================================================== */
 
 const startServer = async () => {
-
   console.log("");
 
   console.log(
@@ -366,7 +267,6 @@ const startServer = async () => {
   =============================================== */
 
   if (!databaseConnected) {
-
     console.error("");
 
     console.error(
@@ -380,10 +280,10 @@ const startServer = async () => {
      START EXPRESS
   =============================================== */
 
-  app.listen(
+  const server = app.listen(
     PORT,
+    "0.0.0.0",
     () => {
-
       console.log(
         "✓ Server : Running"
       );
@@ -393,7 +293,7 @@ const startServer = async () => {
       );
 
       console.log(
-        `✓ API    : http://localhost:${PORT}`
+        `✓ API    : http://0.0.0.0:${PORT}`
       );
 
       console.log(
@@ -409,11 +309,27 @@ const startServer = async () => {
       );
 
       console.log(
-        "✓ Suppliers API : Ready"
+        "✓ Products API   : Ready"
       );
 
       console.log(
-        "✓ Settings API : Ready"
+        "✓ Purchases API  : Ready"
+      );
+
+      console.log(
+        "✓ Bills API      : Ready"
+      );
+
+      console.log(
+        "✓ Customers API  : Ready"
+      );
+
+      console.log(
+        "✓ Suppliers API  : Ready"
+      );
+
+      console.log(
+        "✓ Settings API   : Ready"
       );
 
       console.log(
@@ -423,6 +339,63 @@ const startServer = async () => {
       console.log("");
     }
   );
+
+  /* ===============================================
+     SERVER ERROR
+  =============================================== */
+
+  server.on("error", (error) => {
+    console.error(
+      "Server Error:",
+      error.message
+    );
+
+    process.exit(1);
+  });
+
+  /* ===============================================
+     GRACEFUL SHUTDOWN
+  =============================================== */
+
+  const shutdown = async (signal) => {
+    try {
+      console.log(
+        `\n${signal} received. Shutting down...`
+      );
+
+      server.close(async () => {
+        console.log(
+          "HTTP server closed."
+        );
+
+        await mongoose.connection.close();
+
+        console.log(
+          "MongoDB connection closed."
+        );
+
+        process.exit(0);
+      });
+
+    } catch (error) {
+      console.error(
+        "Shutdown Error:",
+        error.message
+      );
+
+      process.exit(1);
+    }
+  };
+
+  process.on(
+    "SIGINT",
+    () => shutdown("SIGINT")
+  );
+
+  process.on(
+    "SIGTERM",
+    () => shutdown("SIGTERM")
+  );
 };
 
 /* =====================================================
@@ -430,44 +403,3 @@ const startServer = async () => {
 ===================================================== */
 
 startServer();
-
-/* =====================================================
-   GRACEFUL SHUTDOWN
-===================================================== */
-
-const shutdown = async (signal) => {
-
-  try {
-
-    console.log(
-      `\n${signal} received. Shutting down...`
-    );
-
-    await mongoose.connection.close();
-
-    console.log(
-      "MongoDB connection closed."
-    );
-
-    process.exit(0);
-
-  } catch (error) {
-
-    console.error(
-      "Shutdown Error:",
-      error.message
-    );
-
-    process.exit(1);
-  }
-};
-
-process.on(
-  "SIGINT",
-  () => shutdown("SIGINT")
-);
-
-process.on(
-  "SIGTERM",
-  () => shutdown("SIGTERM")
-);
