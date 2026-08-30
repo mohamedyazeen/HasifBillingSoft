@@ -23,12 +23,88 @@ function AppLayout({ children }) {
   const location = useLocation();
   const [mobileSidebarOpen, setMobileSidebarOpen] =
     useState(false);
+
+  const [hasStockAlerts, setHasStockAlerts] =
+    useState(false);
   // =====================================================
   // USER
   // =====================================================
   const userId =
     localStorage.getItem("hasif_userId") ||
     "hasif@store";
+  // =====================================================
+  // STOCK ALERT STATUS
+  // =====================================================
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const checkStockAlerts = async () => {
+      try {
+        const token =
+          localStorage.getItem("hasif_token");
+
+        if (!token) {
+          if (!cancelled) {
+            setHasStockAlerts(false);
+          }
+          return;
+        }
+
+        const response = await fetch(
+          "https://hasifbillingsoft.onrender.com/api/products/low-stock",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          if (!cancelled) {
+            setHasStockAlerts(false);
+          }
+          return;
+        }
+
+        const data = await response.json();
+
+        const products =
+          Array.isArray(data?.products)
+            ? data.products
+            : [];
+
+        if (!cancelled) {
+          setHasStockAlerts(products.length > 0);
+        }
+      } catch (error) {
+        console.error(
+          "Stock alert status error:",
+          error
+        );
+
+        if (!cancelled) {
+          setHasStockAlerts(false);
+        }
+      }
+    };
+
+    checkStockAlerts();
+
+    // Re-check periodically so the sidebar reflects
+    // stock changes without requiring a page refresh.
+    const intervalId = setInterval(
+      checkStockAlerts,
+      30000
+    );
+
+    return () => {
+      cancelled = true;
+      clearInterval(intervalId);
+    };
+  }, []);
+
   // =====================================================
   // CLOSE MOBILE SIDEBAR WHEN ROUTE CHANGES
   // =====================================================
@@ -135,6 +211,18 @@ function AppLayout({ children }) {
           <span className="hasif-nav-label">
             {item.label}
           </span>
+
+          {item.path === "/stock-alerts" &&
+            hasStockAlerts && (
+              <span
+                className="hasif-nav-danger"
+                title="Stock Alerts available"
+                aria-label="Stock Alerts available"
+              >
+                !
+              </span>
+            )}
+
           <ChevronRight
             className="hasif-nav-arrow"
             size={14}
@@ -221,14 +309,14 @@ function AppLayout({ children }) {
         }
         .hasif-brand-name {
           color: #111;
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 900;
           letter-spacing: -0.3px;
         }
         .hasif-brand-subtitle {
           margin-top: 2px;
           color: #999;
-          font-size: 7px;
+          font-size: 9px;
           font-weight: 800;
           letter-spacing: 1.25px;
         }
@@ -252,7 +340,7 @@ function AppLayout({ children }) {
           padding:
             0 10px 7px;
           color: #a0a0a0;
-          font-size: 7px;
+          font-size: 9px;
           font-weight: 850;
           letter-spacing: 1.3px;
           text-transform: uppercase;
@@ -269,7 +357,7 @@ function AppLayout({ children }) {
           border-radius: 12px;
           color: #6f6f6f;
           text-decoration: none;
-          font-size: 10.5px;
+          font-size: 12px;
           font-weight: 650;
           transition:
             background 0.18s ease,
@@ -297,6 +385,44 @@ function AppLayout({ children }) {
         .hasif-nav-label {
           flex: 1;
         }
+        .hasif-nav-danger {
+          width: 18px;
+          height: 18px;
+          flex-shrink: 0;
+
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+
+          border-radius: 50%;
+
+          background: #dc2626;
+          color: #fff;
+
+          font-size: 11px;
+          font-weight: 900;
+          line-height: 1;
+
+          box-shadow:
+            0 4px 10px
+            rgba(220, 38, 38, 0.22);
+
+          animation:
+            hasif-danger-pulse
+            1.8s ease-in-out infinite;
+        }
+
+        @keyframes hasif-danger-pulse {
+          0%,
+          100% {
+            transform: scale(1);
+          }
+
+          50% {
+            transform: scale(1.08);
+          }
+        }
+
         .hasif-nav-arrow {
           opacity: 0;
           transform:

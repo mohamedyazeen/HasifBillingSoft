@@ -52,8 +52,7 @@ function Dashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      const token =
-        localStorage.getItem("hasif_token");
+      const token = localStorage.getItem("hasif_token");
 
       if (!token) {
         navigate("/");
@@ -72,8 +71,7 @@ function Dashboard() {
       const data = await response.json();
 
       if (response.ok) {
-        const products =
-          data.products || [];
+        const products = data.products || [];
 
         setLowStockProducts(products);
 
@@ -82,21 +80,13 @@ function Dashboard() {
           lowStock: products.length,
         }));
       } else if (response.status === 401) {
-        localStorage.removeItem(
-          "hasif_token"
-        );
-
-        localStorage.removeItem(
-          "hasif_user"
-        );
+        localStorage.removeItem("hasif_token");
+        localStorage.removeItem("hasif_user");
 
         navigate("/");
       }
     } catch (error) {
-      console.error(
-        "Dashboard data error:",
-        error
-      );
+      console.error("Dashboard data error:", error);
     } finally {
       setLoading(false);
     }
@@ -107,8 +97,7 @@ function Dashboard() {
   ===================================================== */
 
   const getGreeting = () => {
-    const hour =
-      new Date().getHours();
+    const hour = new Date().getHours();
 
     if (hour < 12) {
       return "Good morning";
@@ -162,6 +151,9 @@ function Dashboard() {
           overflow-x: hidden;
 
           color: #111111;
+
+          /* Base readable text size */
+          font-size: 15px;
         }
 
 
@@ -193,7 +185,7 @@ function Dashboard() {
         .dashboard-eyebrow {
           margin: 0;
 
-          font-size: 10px;
+          font-size: 12px;
 
           font-weight: 800;
 
@@ -201,7 +193,7 @@ function Dashboard() {
 
           line-height: 1.4;
 
-          color: #8a8a8a;
+          color: #777777;
 
           text-transform: uppercase;
         }
@@ -215,7 +207,7 @@ function Dashboard() {
             "Times New Roman",
             serif;
 
-          font-size: 36px;
+          font-size: 40px;
 
           line-height: 1.08;
 
@@ -230,11 +222,11 @@ function Dashboard() {
           margin:
             10px 0 0;
 
-          font-size: 14px;
+          font-size: 16px;
 
           line-height: 1.5;
 
-          color: #777777;
+          color: #707070;
         }
 
 
@@ -263,7 +255,7 @@ function Dashboard() {
         .dashboard-user-info strong {
           display: block;
 
-          max-width: 160px;
+          max-width: 180px;
 
           overflow: hidden;
 
@@ -271,7 +263,7 @@ function Dashboard() {
 
           white-space: nowrap;
 
-          font-size: 12px;
+          font-size: 14px;
 
           font-weight: 800;
 
@@ -283,20 +275,20 @@ function Dashboard() {
 
           margin-top: 3px;
 
-          font-size: 9px;
+          font-size: 11px;
 
           font-weight: 800;
 
           letter-spacing: 0.8px;
 
-          color: #8d8d8d;
+          color: #777777;
 
           text-transform: uppercase;
         }
 
         .dashboard-avatar {
-          width: 44px;
-          height: 44px;
+          width: 46px;
+          height: 46px;
 
           flex-shrink: 0;
 
@@ -311,7 +303,7 @@ function Dashboard() {
 
           color: #ffffff;
 
-          font-size: 14px;
+          font-size: 16px;
 
           font-weight: 800;
 
@@ -333,12 +325,12 @@ function Dashboard() {
 
           gap: 8px;
 
-          height: 46px;
+          height: 48px;
 
           margin-top: 22px;
 
           padding:
-            0 17px;
+            0 19px;
 
           border: none;
 
@@ -350,7 +342,7 @@ function Dashboard() {
 
           cursor: pointer;
 
-          font-size: 13px;
+          font-size: 14px;
 
           font-weight: 750;
 
@@ -404,9 +396,9 @@ function Dashboard() {
 
           min-width: 0;
 
-          min-height: 145px;
+          min-height: 150px;
 
-          padding: 21px;
+          padding: 22px;
 
           border:
             1px solid
@@ -468,16 +460,16 @@ function Dashboard() {
 
           white-space: nowrap;
 
-          font-size: 11px;
+          font-size: 14px;
 
-          font-weight: 600;
+          font-weight: 650;
 
-          color: #777777;
+          color: #666666;
         }
 
         .dashboard-stat-icon {
-          width: 36px;
-          height: 36px;
+          width: 38px;
+          height: 38px;
 
           flex-shrink: 0;
 
@@ -504,7 +496,7 @@ function Dashboard() {
             "Times New Roman",
             serif;
 
-          font-size: 30px;
+          font-size: 34px;
 
           line-height: 1;
 
@@ -518,13 +510,13 @@ function Dashboard() {
         .dashboard-stat-note {
           display: block;
 
-          margin-top: 8px;
+          margin-top: 9px;
 
-          font-size: 10px;
+          font-size: 12px;
 
           line-height: 1.4;
 
-          color: #919191;
+          color: #858585;
         }
 
 
@@ -610,7 +602,7 @@ function Dashboard() {
             "Times New Roman",
             serif;
 
-          font-size: 20px;
+          font-size: 23px;
 
           line-height: 1.2;
 
@@ -631,10 +623,10 @@ function Dashboard() {
 
           flex-shrink: 0;
 
-          height: 36px;
+          height: 38px;
 
           padding:
-            0 11px;
+            0 13px;
 
           border:
             1px solid
@@ -649,7 +641,7 @@ function Dashboard() {
 
           cursor: pointer;
 
-          font-size: 10px;
+          font-size: 12px;
 
           font-weight: 750;
 
@@ -701,8 +693,8 @@ function Dashboard() {
         }
 
         .sales-empty-icon {
-          width: 62px;
-          height: 62px;
+          width: 64px;
+          height: 64px;
 
           display: flex;
 
@@ -727,22 +719,22 @@ function Dashboard() {
             "Times New Roman",
             serif;
 
-          font-size: 16px;
+          font-size: 19px;
 
           color: #222222;
         }
 
         .sales-empty p {
-          max-width: 320px;
+          max-width: 340px;
 
           margin:
-            8px auto 0;
+            9px auto 0;
 
-          font-size: 11px;
+          font-size: 13px;
 
           line-height: 1.55;
 
-          color: #888888;
+          color: #7c7c7c;
         }
 
 
@@ -802,7 +794,7 @@ function Dashboard() {
 
           color: #222222;
 
-          font-size: 12px;
+          font-size: 14px;
 
           font-weight: 700;
         }
@@ -812,9 +804,9 @@ function Dashboard() {
 
           margin-top: 4px;
 
-          color: #929292;
+          color: #858585;
 
-          font-size: 9px;
+          font-size: 11px;
         }
 
         .dashboard-alert-stock {
@@ -828,7 +820,7 @@ function Dashboard() {
 
           color: #111111;
 
-          font-size: 13px;
+          font-size: 15px;
 
           font-weight: 800;
         }
@@ -838,9 +830,9 @@ function Dashboard() {
 
           margin-top: 3px;
 
-          color: #8e8e8e;
+          color: #808080;
 
-          font-size: 8px;
+          font-size: 10px;
         }
 
         .dashboard-alert-empty {
@@ -862,8 +854,8 @@ function Dashboard() {
         }
 
         .dashboard-alert-empty-icon {
-          width: 58px;
-          height: 58px;
+          width: 60px;
+          height: 60px;
 
           display: flex;
 
@@ -888,22 +880,22 @@ function Dashboard() {
             "Times New Roman",
             serif;
 
-          font-size: 15px;
+          font-size: 18px;
 
           color: #333333;
         }
 
         .dashboard-alert-empty p {
-          max-width: 240px;
+          max-width: 260px;
 
           margin:
-            7px auto 0;
+            8px auto 0;
 
-          font-size: 10px;
+          font-size: 12px;
 
           line-height: 1.55;
 
-          color: #8c8c8c;
+          color: #858585;
         }
 
 
@@ -946,7 +938,7 @@ function Dashboard() {
 
           gap: 11px;
 
-          padding: 14px;
+          padding: 15px;
 
           border:
             1px solid
@@ -980,8 +972,8 @@ function Dashboard() {
         }
 
         .quick-action-icon {
-          width: 40px;
-          height: 40px;
+          width: 42px;
+          height: 42px;
 
           flex-shrink: 0;
 
@@ -1012,7 +1004,7 @@ function Dashboard() {
 
           white-space: nowrap;
 
-          font-size: 12px;
+          font-size: 14px;
 
           font-weight: 750;
 
@@ -1030,9 +1022,9 @@ function Dashboard() {
 
           white-space: nowrap;
 
-          font-size: 9px;
+          font-size: 11px;
 
-          color: #919191;
+          color: #858585;
         }
 
 
@@ -1079,7 +1071,11 @@ function Dashboard() {
           }
 
           .dashboard-heading h1 {
-            font-size: 32px;
+            font-size: 36px;
+          }
+
+          .dashboard-subtitle {
+            font-size: 15px;
           }
 
           .dashboard-stats {
@@ -1087,18 +1083,22 @@ function Dashboard() {
           }
 
           .dashboard-stat {
-            min-height: 135px;
+            min-height: 140px;
 
-            padding: 18px;
+            padding: 19px;
           }
 
           .dashboard-stat-value {
-            font-size: 28px;
+            font-size: 31px;
           }
 
           .dashboard-panel-header {
             padding:
               20px 19px 0;
+          }
+
+          .dashboard-panel-header h2 {
+            font-size: 21px;
           }
 
           .sales-overview {
@@ -1147,7 +1147,7 @@ function Dashboard() {
           }
 
           .dashboard-eyebrow {
-            font-size: 9px;
+            font-size: 10px;
 
             letter-spacing: 1.4px;
           }
@@ -1155,7 +1155,7 @@ function Dashboard() {
           .dashboard-heading h1 {
             margin-top: 6px;
 
-            font-size: 29px;
+            font-size: 32px;
 
             letter-spacing: -1.2px;
           }
@@ -1163,17 +1163,17 @@ function Dashboard() {
           .dashboard-subtitle {
             margin-top: 8px;
 
-            font-size: 13px;
+            font-size: 14px;
           }
 
           .new-bill-button {
             width: 100%;
 
-            height: 48px;
+            height: 50px;
 
             margin-top: 17px;
 
-            font-size: 13px;
+            font-size: 14px;
           }
 
           .dashboard-user-box {
@@ -1190,6 +1190,8 @@ function Dashboard() {
 
           .dashboard-user-info strong {
             max-width: 200px;
+
+            font-size: 14px;
           }
 
 
@@ -1208,9 +1210,9 @@ function Dashboard() {
           .dashboard-stat {
             width: 100%;
 
-            min-height: 120px;
+            min-height: 125px;
 
-            padding: 18px;
+            padding: 19px;
 
             border-radius: 17px;
           }
@@ -1218,15 +1220,15 @@ function Dashboard() {
           .dashboard-stat-value {
             margin-top: 17px;
 
-            font-size: 27px;
+            font-size: 30px;
           }
 
           .dashboard-stat-label {
-            font-size: 11px;
+            font-size: 14px;
           }
 
           .dashboard-stat-note {
-            font-size: 10px;
+            font-size: 12px;
           }
 
 
@@ -1258,16 +1260,16 @@ function Dashboard() {
           }
 
           .dashboard-panel-header h2 {
-            font-size: 18px;
+            font-size: 20px;
           }
 
           .dashboard-panel-button {
-            height: 33px;
+            height: 36px;
 
             padding:
-              0 9px;
+              0 10px;
 
-            font-size: 9px;
+            font-size: 11px;
           }
 
 
@@ -1289,16 +1291,16 @@ function Dashboard() {
           }
 
           .sales-empty-icon {
-            width: 55px;
-            height: 55px;
+            width: 57px;
+            height: 57px;
           }
 
           .sales-empty h3 {
-            font-size: 15px;
+            font-size: 17px;
           }
 
           .sales-empty p {
-            font-size: 10px;
+            font-size: 12px;
           }
 
 
@@ -1315,17 +1317,30 @@ function Dashboard() {
           }
 
           .dashboard-alert-product strong {
-            font-size: 11px;
+            font-size: 13px;
+          }
+
+          .dashboard-alert-product span {
+            font-size: 10px;
           }
 
           .dashboard-alert-stock strong {
-            font-size: 12px;
+            font-size: 14px;
           }
+
 
           .dashboard-alert-empty {
             min-height: 220px;
 
             padding: 20px;
+          }
+
+          .dashboard-alert-empty h3 {
+            font-size: 17px;
+          }
+
+          .dashboard-alert-empty p {
+            font-size: 11px;
           }
 
 
@@ -1351,22 +1366,22 @@ function Dashboard() {
           .quick-action-card {
             width: 100%;
 
-            padding: 13px;
+            padding: 14px;
 
             border-radius: 13px;
           }
 
           .quick-action-icon {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
           }
 
           .quick-action-text strong {
-            font-size: 11px;
+            font-size: 14px;
           }
 
           .quick-action-text span {
-            font-size: 9px;
+            font-size: 11px;
           }
         }
 
@@ -1383,17 +1398,25 @@ function Dashboard() {
           }
 
           .dashboard-heading h1 {
-            font-size: 26px;
+            font-size: 29px;
+          }
+
+          .dashboard-subtitle {
+            font-size: 14px;
           }
 
           .dashboard-stat {
-            min-height: 115px;
+            min-height: 120px;
 
-            padding: 16px;
+            padding: 17px;
           }
 
           .dashboard-stat-value {
-            font-size: 25px;
+            font-size: 28px;
+          }
+
+          .dashboard-stat-label {
+            font-size: 13px;
           }
 
           .dashboard-panel-header {
@@ -1402,14 +1425,14 @@ function Dashboard() {
           }
 
           .dashboard-panel-header h2 {
-            font-size: 16px;
+            font-size: 18px;
           }
 
           .dashboard-panel-button {
             padding:
-              0 7px;
+              0 8px;
 
-            font-size: 8px;
+            font-size: 10px;
           }
 
           .sales-overview {
@@ -1460,7 +1483,8 @@ function Dashboard() {
                 navigate("/billing")
               }
             >
-              <Plus size={18} />
+              <Plus size={19} />
+
               New Bill
             </button>
 
@@ -1509,7 +1533,7 @@ function Dashboard() {
               </span>
 
               <div className="dashboard-stat-icon">
-                <BarChart3 size={18} />
+                <BarChart3 size={19} />
               </div>
 
             </div>
@@ -1539,7 +1563,7 @@ function Dashboard() {
               </span>
 
               <div className="dashboard-stat-icon">
-                <Receipt size={18} />
+                <Receipt size={19} />
               </div>
 
             </div>
@@ -1566,7 +1590,7 @@ function Dashboard() {
               </span>
 
               <div className="dashboard-stat-icon">
-                <Wallet size={18} />
+                <Wallet size={19} />
               </div>
 
             </div>
@@ -1596,7 +1620,7 @@ function Dashboard() {
               </span>
 
               <div className="dashboard-stat-icon">
-                <AlertTriangle size={18} />
+                <AlertTriangle size={19} />
               </div>
 
             </div>
@@ -1649,7 +1673,8 @@ function Dashboard() {
                 }
               >
                 View Sales
-                <ArrowUpRight size={14} />
+
+                <ArrowUpRight size={15} />
               </button>
 
             </div>
@@ -1660,7 +1685,7 @@ function Dashboard() {
               <div className="sales-empty">
 
                 <div className="sales-empty-icon">
-                  <BarChart3 size={28} />
+                  <BarChart3 size={29} />
                 </div>
 
                 <h3>
@@ -1708,7 +1733,8 @@ function Dashboard() {
                 }
               >
                 View All
-                <ArrowUpRight size={14} />
+
+                <ArrowUpRight size={15} />
               </button>
 
             </div>
@@ -1718,7 +1744,7 @@ function Dashboard() {
 
               <div className="dashboard-alert-empty">
 
-                <Package size={28} />
+                <Package size={29} />
 
                 <p>
                   Checking inventory...
@@ -1731,7 +1757,7 @@ function Dashboard() {
               <div className="dashboard-alert-empty">
 
                 <div className="dashboard-alert-empty-icon">
-                  <Package size={26} />
+                  <Package size={27} />
                 </div>
 
                 <h3>
@@ -1836,7 +1862,7 @@ function Dashboard() {
             >
 
               <div className="quick-action-icon">
-                <Receipt size={19} />
+                <Receipt size={20} />
               </div>
 
               <div className="quick-action-text">
@@ -1865,7 +1891,7 @@ function Dashboard() {
             >
 
               <div className="quick-action-icon">
-                <Package size={19} />
+                <Package size={20} />
               </div>
 
               <div className="quick-action-text">
@@ -1894,7 +1920,7 @@ function Dashboard() {
             >
 
               <div className="quick-action-icon">
-                <AlertTriangle size={19} />
+                <AlertTriangle size={20} />
               </div>
 
               <div className="quick-action-text">
@@ -1923,7 +1949,7 @@ function Dashboard() {
             >
 
               <div className="quick-action-icon">
-                <ShoppingBag size={19} />
+                <ShoppingBag size={20} />
               </div>
 
               <div className="quick-action-text">

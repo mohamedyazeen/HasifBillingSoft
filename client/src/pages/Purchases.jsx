@@ -570,16 +570,27 @@ function Purchases() {
 
         .purchases-page {
           width: 100%;
+          min-width: 0;
+          max-width: 100%;
           min-height: 100vh;
+          box-sizing: border-box;
           padding: 28px 36px 45px;
           color: #171717;
           font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
             "Segoe UI", Arial, sans-serif;
+          overflow-x: hidden;
+        }
+
+        .purchases-page *,
+        .purchases-page *::before,
+        .purchases-page *::after {
+          box-sizing: border-box;
         }
 
         .purchases-container {
           width: 100%;
           max-width: 1500px;
+          min-width: 0;
           margin: 0 auto;
         }
 
@@ -624,7 +635,15 @@ function Purchases() {
         .purchases-actions {
           display: flex;
           align-items: center;
+          justify-content: flex-end;
           gap: 10px;
+          flex-shrink: 0;
+          min-width: 0;
+        }
+
+        .purchases-actions .purchase-button {
+          flex-shrink: 0;
+          white-space: nowrap;
         }
 
         .purchase-button {
@@ -746,6 +765,7 @@ function Purchases() {
 
         .purchase-search {
           width: 100%;
+          min-width: 0;
           max-width: 680px;
           height: 48px;
           display: flex;
@@ -1372,6 +1392,21 @@ function Purchases() {
         /* =========================
            MOBILE / TABLET
         ========================= */
+
+        @media (max-width: 1180px) {
+          .purchases-header {
+            flex-wrap: wrap;
+          }
+
+          .purchases-heading {
+            min-width: 0;
+            flex: 1 1 520px;
+          }
+
+          .purchases-actions {
+            flex: 0 0 auto;
+          }
+        }
 
         @media (max-width: 1100px) {
           .purchases-page {

@@ -1399,7 +1399,7 @@ function Billing() {
 
         .billing-eyebrow {
           color: #555;
-          font-size: 11px;
+          font-size: 14px;
           font-weight: 800;
           letter-spacing: 1.3px;
           margin-bottom: 7px;
@@ -1408,7 +1408,7 @@ function Billing() {
         .billing-header h1 {
           margin: 0;
           color: #111;
-          font-size: 31px;
+          font-size: 34px;
           line-height: 1;
           letter-spacing: -1.4px;
         }
@@ -1416,7 +1416,7 @@ function Billing() {
         .billing-header p {
           margin-top: 8px;
           color: #444;
-          font-size: 13px;
+          font-size: 14px;
         }
 
         .billing-header-buttons {
@@ -1435,7 +1435,7 @@ function Billing() {
 
           border-radius: 11px;
 
-          font-size: 12px;
+          font-size: 14px;
           font-weight: 800;
 
           cursor: pointer;
@@ -1477,7 +1477,7 @@ function Billing() {
 
           border-radius: 11px;
 
-          font-size: 12px;
+          font-size: 14px;
           font-weight: 750;
         }
 
@@ -1565,7 +1565,7 @@ function Billing() {
 
           color: #555;
 
-          font-size: 11px;
+          font-size: 14px;
           font-weight: 850;
         }
 
@@ -1585,7 +1585,7 @@ function Billing() {
           outline: none;
 
           font-family: inherit;
-          font-size: 13px;
+          font-size: 14px;
 
           color: #222;
         }
@@ -1658,7 +1658,7 @@ function Billing() {
 
           color: #222;
 
-          font-size: 13px;
+          font-size: 14px;
         }
 
         .search-input:focus {
@@ -1748,7 +1748,7 @@ function Billing() {
 
           color: #222;
 
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 850;
 
           white-space: nowrap;
@@ -1760,13 +1760,13 @@ function Billing() {
 
           color: #555;
 
-          font-size: 11px;
+          font-size: 14px;
         }
 
         .result-price {
           color: #111;
 
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 850;
         }
 
@@ -1789,7 +1789,7 @@ function Billing() {
 
           color: #222;
 
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 850;
         }
 
@@ -1810,7 +1810,7 @@ function Billing() {
 
           color: #555;
 
-          font-size: 11px;
+          font-size: 14px;
         }
 
         .table-wrap {
@@ -1834,7 +1834,7 @@ function Billing() {
 
           text-align: left;
 
-          font-size: 7px;
+          font-size: 14px;
           font-weight: 850;
 
           letter-spacing: .7px;
@@ -1850,7 +1850,7 @@ function Billing() {
 
           color: #555;
 
-          font-size: 12px;
+          font-size: 14px;
         }
 
         /* LIGHT LINE UNDER EVERY PRODUCT */
@@ -1868,7 +1868,7 @@ function Billing() {
         .item-name {
           color: #222;
 
-          font-size: 12px;
+          font-size: 14px;
           font-weight: 850;
         }
 
@@ -1877,7 +1877,7 @@ function Billing() {
 
           color: #555;
 
-          font-size: 7px;
+          font-size: 14px;
         }
 
         /* =================================================
@@ -1942,7 +1942,7 @@ function Billing() {
 
           font-family: inherit;
 
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 850;
         }
 
@@ -2039,7 +2039,7 @@ function Billing() {
 
           color: #555;
 
-          font-size: 11px;
+          font-size: 14px;
         }
 
         /* =================================================
@@ -2089,7 +2089,7 @@ function Billing() {
 
           color: #555;
 
-          font-size: 7px;
+          font-size: 14px;
         }
 
         .summary-row {
@@ -2101,7 +2101,7 @@ function Billing() {
 
           color: #333;
 
-          font-size: 12px;
+          font-size: 14px;
         }
 
         .summary-row strong {
@@ -2158,7 +2158,7 @@ function Billing() {
 
           color: #333;
 
-          font-size: 11px;
+          font-size: 14px;
         }
 
         .gst-left span {
@@ -2168,7 +2168,7 @@ function Billing() {
 
           color: #555;
 
-          font-size: 7px;
+          font-size: 14px;
         }
 
         .switch {
@@ -2227,7 +2227,7 @@ function Billing() {
 
           color: #555;
 
-          font-size: 11px;
+          font-size: 14px;
           font-weight: 850;
         }
 
@@ -2249,7 +2249,7 @@ function Billing() {
             rgba(255,255,255,.75);
 
           font-family: inherit;
-          font-size: 12px;
+          font-size: 14px;
         }
 
         /* =================================================
@@ -2276,7 +2276,7 @@ function Billing() {
         .grand-total span {
           color: #444;
 
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 850;
         }
 
@@ -2301,7 +2301,7 @@ function Billing() {
 
           color: #555;
 
-          font-size: 11px;
+          font-size: 14px;
           font-weight: 850;
         }
 
@@ -2328,7 +2328,7 @@ function Billing() {
 
           color: #333;
 
-          font-size: 11px;
+          font-size: 14px;
           font-weight: 800;
 
           cursor: pointer;
@@ -2351,7 +2351,7 @@ function Billing() {
 
           color: #555;
 
-          font-size: 11px;
+          font-size: 14px;
           font-weight: 850;
         }
 
@@ -2373,7 +2373,7 @@ function Billing() {
             rgba(255,255,255,.8);
 
           font-family: inherit;
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 750;
         }
 
@@ -2396,7 +2396,7 @@ function Billing() {
 
           color: #333;
 
-          font-size: 11px;
+          font-size: 14px;
         }
 
         .result-row strong {
@@ -2433,7 +2433,7 @@ function Billing() {
           background: #111;
           color: #fff;
 
-          font-size: 12px;
+          font-size: 14px;
           font-weight: 850;
 
           cursor: pointer;
@@ -2477,7 +2477,7 @@ function Billing() {
         .last-bill-label {
           color: #555;
 
-          font-size: 7px;
+          font-size: 14px;
           font-weight: 850;
 
           letter-spacing: .6px;
@@ -2489,7 +2489,7 @@ function Billing() {
 
           color: #222;
 
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 850;
         }
 
@@ -2498,7 +2498,7 @@ function Billing() {
 
           color: #333;
 
-          font-size: 11px;
+          font-size: 14px;
         }
 
         .print-bill-button {
@@ -2518,7 +2518,7 @@ function Billing() {
           color: #fff;
 
           font-family: inherit;
-          font-size: 11px;
+          font-size: 14px;
           font-weight: 850;
 
           cursor: pointer;

@@ -412,12 +412,18 @@ function Products() {
         }
 
         .products-page {
+          width: 100%;
+          min-width: 0;
+          max-width: 100%;
           min-height: 100vh;
+          box-sizing: border-box;
           padding: 28px 32px 45px;
+          overflow-x: hidden;
         }
 
         .products-container {
           width: 100%;
+          min-width: 0;
           max-width: 1500px;
           margin: 0 auto;
         }
@@ -432,6 +438,22 @@ function Products() {
           justify-content: space-between;
           gap: 20px;
           margin-bottom: 20px;
+          min-width: 0;
+        }
+
+        .products-header > div:first-child {
+          min-width: 0;
+          flex: 1 1 auto;
+        }
+
+        .products-header h1,
+        .products-header p {
+          overflow-wrap: anywhere;
+        }
+
+        .add-product-button {
+          flex: 0 0 auto;
+          white-space: nowrap;
         }
 
         .products-eyebrow {
@@ -572,6 +594,7 @@ function Products() {
           justify-content: space-between;
 
           gap: 15px;
+          min-width: 0;
 
           padding: 16px;
 
@@ -584,6 +607,8 @@ function Products() {
           position: relative;
 
           width: min(600px, 100%);
+          min-width: 0;
+          flex: 1 1 600px;
         }
 
         .products-search svg {
@@ -647,6 +672,8 @@ function Products() {
 
         .products-table-wrap {
           width: 100%;
+          min-width: 0;
+          max-width: 100%;
           overflow-x: auto;
         }
 
@@ -1277,6 +1304,29 @@ function Products() {
         }
 
         /* ==============================================
+           TABLET / NARROW DESKTOP
+        ============================================== */
+
+        @media (max-width: 1100px) {
+          .products-header {
+            flex-wrap: wrap;
+          }
+
+          .products-header > div:first-child {
+            flex: 1 1 500px;
+          }
+
+          .products-toolbar {
+            flex-wrap: wrap;
+          }
+
+          .products-search {
+            flex-basis: 100%;
+            max-width: none;
+          }
+        }
+
+        /* ==============================================
            MOBILE
         ============================================== */
 
@@ -1512,14 +1562,15 @@ function Products() {
                 <table className="products-table">
 
                   <colgroup>
-                    <col style={{ width: "25%" }} />
-                    <col style={{ width: "13%" }} />
+                    <col style={{ width: "23%" }} />
+                    <col style={{ width: "12%" }} />
+                    <col style={{ width: "10%" }} />
+                    <col style={{ width: "10%" }} />
+                    <col style={{ width: "10%" }} />
+                    <col style={{ width: "8%" }} />
+                    <col style={{ width: "8%" }} />
                     <col style={{ width: "11%" }} />
-                    <col style={{ width: "11%" }} />
-                    <col style={{ width: "11%" }} />
-                    <col style={{ width: "9%" }} />
-                    <col style={{ width: "9%" }} />
-                    <col style={{ width: "11%" }} />
+                    <col style={{ width: "8%" }} />
                   </colgroup>
 
                   <thead>

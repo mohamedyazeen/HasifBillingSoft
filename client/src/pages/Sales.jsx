@@ -589,7 +589,7 @@ function Sales() {
               Helvetica,
               sans-serif;
 
-            font-size: 10px;
+            font-size: 13px;
             line-height: 1.25;
 
             -webkit-print-color-adjust:
@@ -638,7 +638,7 @@ function Sales() {
             gap: 2mm;
 
             padding: 1.5px 0;
-            font-size: 9px;
+            font-size: 12px;
           }
 
           .info-label {
@@ -670,7 +670,7 @@ function Sales() {
             border-bottom:
               1px solid #000;
 
-            font-size: 8px;
+            font-size: 11px;
             font-weight: 900;
           }
 
@@ -747,7 +747,7 @@ function Sales() {
             border-bottom:
               1px solid #000;
 
-            font-size: 11.5px;
+            font-size: 14px;
             font-weight: 900;
           }
 
@@ -1044,9 +1044,14 @@ function Sales() {
       <style>{`
 
         .sales-page {
+          width: 100%;
+          min-width: 0;
+          max-width: 100%;
           min-height: 100vh;
+          box-sizing: border-box;
 
           padding: 24px;
+          overflow-x: hidden;
         }
 
         /* =================================================
@@ -1055,19 +1060,24 @@ function Sales() {
 
         .sales-header {
           display: flex;
-
           align-items: center;
-
-          justify-content:
-            space-between;
+          justify-content: space-between;
 
           gap: 15px;
+          min-width: 0;
+          flex-wrap: wrap;
 
           margin-bottom: 20px;
         }
 
         .sales-title-wrap {
           min-width: 0;
+          flex: 1 1 auto;
+        }
+
+        .sales-title,
+        .sales-subtitle {
+          overflow-wrap: anywhere;
         }
 
         .sales-title {
@@ -1075,7 +1085,7 @@ function Sales() {
 
           color: #111;
 
-          font-size: 25px;
+          font-size: 34px;
 
           font-weight: 850;
 
@@ -1087,12 +1097,12 @@ function Sales() {
 
           color: #999;
 
-          font-size: 10px;
+          font-size: 13px;
         }
 
         .sales-refresh {
           width: 39px;
-          height: 39px;
+          height: 44px;
 
           display: flex;
 
@@ -1142,10 +1152,12 @@ function Sales() {
 
         .sales-filter-card {
           display: flex;
-
           align-items: center;
 
           gap: 10px;
+          min-width: 0;
+          max-width: 100%;
+          box-sizing: border-box;
 
           padding: 12px;
 
@@ -1171,8 +1183,7 @@ function Sales() {
         .sales-search {
           position: relative;
 
-          flex: 1;
-
+          flex: 1 1 auto;
           min-width: 0;
         }
 
@@ -1191,7 +1202,7 @@ function Sales() {
         .sales-search input {
           width: 100%;
 
-          height: 40px;
+          height: 46px;
 
           padding:
             0 12px 0 37px;
@@ -1211,7 +1222,7 @@ function Sales() {
 
           font-family: inherit;
 
-          font-size: 10px;
+          font-size: 13px;
         }
 
         .sales-search input:focus {
@@ -1224,7 +1235,7 @@ function Sales() {
         .sales-payment-select {
           width: 145px;
 
-          height: 40px;
+          height: 46px;
 
           padding:
             0 10px;
@@ -1244,7 +1255,7 @@ function Sales() {
 
           font-family: inherit;
 
-          font-size: 9px;
+          font-size: 12px;
 
           font-weight: 700;
 
@@ -1277,8 +1288,11 @@ function Sales() {
 
         .sales-table-wrap {
           width: 100%;
+          min-width: 0;
+          max-width: 100%;
 
           overflow-x: auto;
+          overflow-y: hidden;
         }
 
         .sales-table {
@@ -1299,7 +1313,7 @@ function Sales() {
 
           color: #999;
 
-          font-size: 7px;
+          font-size: 10px;
 
           font-weight: 850;
 
@@ -1321,7 +1335,7 @@ function Sales() {
 
           color: #444;
 
-          font-size: 9px;
+          font-size: 12px;
 
           font-weight: 650;
 
@@ -1355,7 +1369,7 @@ function Sales() {
         .date-main {
           color: #444;
 
-          font-size: 8px;
+          font-size: 11px;
         }
 
         .date-time {
@@ -1363,7 +1377,7 @@ function Sales() {
 
           color: #aaa;
 
-          font-size: 7px;
+          font-size: 10px;
         }
 
         .amount {
@@ -1387,7 +1401,7 @@ function Sales() {
 
           color: #555;
 
-          font-size: 7px;
+          font-size: 10px;
 
           font-weight: 850;
 
@@ -1398,7 +1412,7 @@ function Sales() {
         .due-text {
           color: #777;
 
-          font-size: 8px;
+          font-size: 11px;
 
           font-weight: 750;
         }
@@ -1475,7 +1489,7 @@ function Sales() {
         .sales-empty-title {
           color: #555;
 
-          font-size: 11px;
+          font-size: 14px;
 
           font-weight: 800;
         }
@@ -1485,7 +1499,7 @@ function Sales() {
 
           color: #aaa;
 
-          font-size: 8px;
+          font-size: 11px;
         }
 
         /* =================================================
@@ -1509,7 +1523,7 @@ function Sales() {
         .sales-pagination-info {
           color: #999;
 
-          font-size: 8px;
+          font-size: 11px;
 
           font-weight: 700;
         }
@@ -1572,7 +1586,7 @@ function Sales() {
 
           color: #fff;
 
-          font-size: 8px;
+          font-size: 11px;
 
           font-weight: 800;
         }
@@ -1604,8 +1618,9 @@ function Sales() {
 
         .bill-modal {
           width: 100%;
-
+          min-width: 0;
           max-width: 720px;
+          box-sizing: border-box;
 
           max-height:
             calc(100vh - 40px);
@@ -1671,7 +1686,7 @@ function Sales() {
         .bill-modal-title {
           color: #111;
 
-          font-size: 13px;
+          font-size: 16px;
 
           font-weight: 850;
         }
@@ -1681,7 +1696,7 @@ function Sales() {
 
           color: #999;
 
-          font-size: 7px;
+          font-size: 10px;
         }
 
         .modal-actions {
@@ -1752,7 +1767,7 @@ function Sales() {
         .bill-info-label {
           color: #aaa;
 
-          font-size: 7px;
+          font-size: 10px;
 
           font-weight: 800;
 
@@ -1767,7 +1782,7 @@ function Sales() {
 
           color: #333;
 
-          font-size: 9px;
+          font-size: 12px;
 
           font-weight: 750;
         }
@@ -1813,7 +1828,7 @@ function Sales() {
 
           color: #999;
 
-          font-size: 7px;
+          font-size: 10px;
 
           font-weight: 850;
 
@@ -1826,7 +1841,7 @@ function Sales() {
 
           color: #333;
 
-          font-size: 8px;
+          font-size: 11px;
 
           font-weight: 750;
         }
@@ -1836,13 +1851,13 @@ function Sales() {
 
           color: #aaa;
 
-          font-size: 6px;
+          font-size: 9px;
         }
 
         .bill-item-cell {
           color: #555;
 
-          font-size: 8px;
+          font-size: 11px;
 
           text-align: right;
         }
@@ -1879,7 +1894,7 @@ function Sales() {
 
           color: #666;
 
-          font-size: 8px;
+          font-size: 11px;
         }
 
         .bill-summary-row strong {
@@ -1897,7 +1912,7 @@ function Sales() {
 
           color: #111;
 
-          font-size: 11px;
+          font-size: 14px;
 
           font-weight: 850;
         }
@@ -1916,7 +1931,7 @@ function Sales() {
         .bill-notes-title {
           color: #999;
 
-          font-size: 7px;
+          font-size: 10px;
 
           font-weight: 850;
 
@@ -1929,12 +1944,32 @@ function Sales() {
 
           color: #555;
 
-          font-size: 8px;
+          font-size: 11px;
         }
 
         /* =================================================
            RESPONSIVE
         ================================================= */
+
+        @media (max-width: 1050px) {
+          .sales-page {
+            padding-left: 20px;
+            padding-right: 20px;
+          }
+
+          .sales-filter-card {
+            flex-wrap: wrap;
+          }
+
+          .sales-search {
+            flex: 1 1 100%;
+          }
+
+          .sales-payment-select {
+            width: 180px;
+            max-width: 100%;
+          }
+        }
 
         @media (max-width: 700px) {
 
@@ -1943,13 +1978,16 @@ function Sales() {
           }
 
           .sales-title {
-            font-size: 21px;
+            font-size: 28px;
           }
 
           .sales-filter-card {
             flex-direction: column;
-
             align-items: stretch;
+          }
+
+          .sales-search {
+            width: 100%;
           }
 
           .sales-payment-select {

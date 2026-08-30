@@ -241,13 +241,18 @@ function StockAlerts() {
 
         .stock-alerts-page {
           width: 100%;
+          min-width: 0;
+          max-width: 100%;
           min-height: 100vh;
+          box-sizing: border-box;
 
           padding: 34px 36px 45px;
+          overflow-x: hidden;
         }
 
         .stock-alerts-container {
           width: 100%;
+          min-width: 0;
           max-width: 1500px;
 
           margin: 0 auto;
@@ -263,8 +268,19 @@ function StockAlerts() {
           justify-content: space-between;
 
           gap: 20px;
+          min-width: 0;
 
           margin-bottom: 25px;
+        }
+
+        .stock-heading {
+          min-width: 0;
+          flex: 1 1 auto;
+        }
+
+        .stock-heading h1,
+        .stock-heading p {
+          overflow-wrap: anywhere;
         }
 
         .stock-heading h1 {
@@ -291,7 +307,14 @@ function StockAlerts() {
           align-items: center;
           gap: 9px;
 
+          flex: 0 0 auto;
           flex-shrink: 0;
+          max-width: 100%;
+        }
+
+        .stock-header-button {
+          flex: 0 0 auto;
+          white-space: nowrap;
         }
 
         .stock-header-button {
@@ -421,6 +444,7 @@ function StockAlerts() {
 
         .stock-toolbar {
           min-height: 74px;
+          min-width: 0;
 
           display: flex;
           align-items: center;
@@ -450,8 +474,8 @@ function StockAlerts() {
         }
 
         .stock-search {
-          flex: 1;
-
+          flex: 1 1 620px;
+          min-width: 0;
           max-width: 620px;
 
           height: 46px;
@@ -561,6 +585,8 @@ function StockAlerts() {
 
         .stock-table-wrapper {
           width: 100%;
+          min-width: 0;
+          max-width: 100%;
 
           overflow-x: auto;
 
@@ -1144,10 +1170,42 @@ function StockAlerts() {
         }
 
         /* =========================
+           NARROW DESKTOP / TABLET
+        ========================= */
+
+        @media (max-width: 1100px) {
+          .stock-header {
+            flex-wrap: wrap;
+          }
+
+          .stock-heading {
+            flex: 1 1 500px;
+          }
+
+          .stock-header-actions {
+            margin-left: auto;
+          }
+
+          .stock-toolbar {
+            flex-wrap: wrap;
+          }
+
+          .stock-search {
+            flex-basis: 100%;
+            max-width: none;
+          }
+        }
+
+        /* =========================
            MOBILE
         ========================= */
 
         @media (max-width: 1000px) {
+          .stock-alerts-page {
+            padding-left: 28px;
+            padding-right: 28px;
+          }
+
           .stock-summary {
             grid-template-columns:
               repeat(3, minmax(0, 1fr));
