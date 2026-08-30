@@ -44,6 +44,10 @@ function Login() {
         password
       );
 
+      /* ==========================================
+         SAVE LOGIN DATA
+      ========================================== */
+
       localStorage.setItem(
         "hasif_token",
         data.token
@@ -54,13 +58,22 @@ function Login() {
         JSON.stringify(data.user)
       );
 
-      if (data.user.mustChangePassword) {
-        navigate("/change-password");
-      } else {
-        navigate("/dashboard");
-      }
+      /* ==========================================
+         LOGIN SUCCESS
+         
+         Always go directly to Dashboard.
+         Do NOT check mustChangePassword.
+      ========================================== */
+
+      navigate("/dashboard", {
+        replace: true,
+      });
+
     } catch (error) {
-      setError(error.message);
+      setError(
+        error?.message ||
+          "Login failed. Please check your User ID and Password."
+      );
     } finally {
       setLoading(false);
     }
@@ -622,13 +635,16 @@ function Login() {
           <div className="login-logo">
 
             <div className="logo-box">
+
               <Store
                 size={25}
                 strokeWidth={2}
               />
+
             </div>
 
             <div>
+
               <h1>
                 HASIF STORE
               </h1>
@@ -636,6 +652,7 @@ function Login() {
               <p>
                 POS • BILLING • INVENTORY
               </p>
+
             </div>
 
           </div>
@@ -727,11 +744,13 @@ function Login() {
                       : "Show password"
                   }
                 >
+
                   {showPassword ? (
                     <EyeOff size={19} />
                   ) : (
                     <Eye size={19} />
                   )}
+
                 </button>
 
               </div>
