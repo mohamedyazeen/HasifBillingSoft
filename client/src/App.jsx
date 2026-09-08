@@ -14,10 +14,44 @@ import Billing from "./pages/Billing";
 import Purchases from "./pages/Purchases";
 import Sales from "./pages/Sales";
 import Settings from "./pages/Settings";
-
 import Suppliers from "./pages/Suppliers";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 import AppLayout from "./layouts/AppLayout";
+
+/* =====================================================
+   ROLE BASED HOME REDIRECT
+===================================================== */
+
+function HomeRedirect() {
+  let user = {};
+
+  try {
+    user = JSON.parse(
+      localStorage.getItem("hasif_user") || "{}"
+    );
+  } catch (error) {
+    user = {};
+  }
+
+  // Staff → Billing
+  if (user?.role === "staff") {
+    return (
+      <Navigate
+        to="/billing"
+        replace
+      />
+    );
+  }
+
+  // Admin / Manager → Dashboard
+  return (
+    <Navigate
+      to="/dashboard"
+      replace
+    />
+  );
+}
 
 /* =====================================================
    APP
@@ -29,7 +63,7 @@ function App() {
       <Routes>
 
         {/* =================================================
-            PUBLIC ROUTE
+            PUBLIC LOGIN
         ================================================= */}
 
         <Route
@@ -164,16 +198,15 @@ function App() {
         ================================================= */}
 
         <Route
-  path="/suppliers"
-  element={
-    <ProtectedRoute>
-      <AppLayout>
-        <Suppliers />
-      </AppLayout>
-    </ProtectedRoute>
-  }
-/>
-        
+          path="/suppliers"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <Suppliers />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
 
         {/* =================================================
             EXPENSES
@@ -197,13 +230,15 @@ function App() {
         ================================================= */}
 
         <Route
-  path="/settings"
-  element={
-    <AppLayout>
-      <Settings />
-    </AppLayout>
-  }
-/>
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <Settings />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
 
         {/* =================================================
             UNKNOWN ROUTE
@@ -211,12 +246,7 @@ function App() {
 
         <Route
           path="*"
-          element={
-            <Navigate
-              to="/dashboard"
-              replace
-            />
-          }
+          element={<HomeRedirect />}
         />
 
       </Routes>
@@ -228,9 +258,7 @@ function App() {
    COMING SOON PAGE
 ===================================================== */
 
-function ComingSoonPage({
-  title,
-}) {
+function ComingSoonPage({ title }) {
   return (
     <>
       <style>{`

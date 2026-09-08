@@ -48,6 +48,24 @@ function Products() {
   const token = localStorage.getItem("hasif_token");
 
   /* =====================================================
+     ROLE
+  ===================================================== */
+
+  const storedUser = localStorage.getItem("hasif_user");
+
+  let currentUser = null;
+
+  try {
+    currentUser = storedUser
+      ? JSON.parse(storedUser)
+      : null;
+  } catch {
+    currentUser = null;
+  }
+
+  const isStaff = currentUser?.role === "staff";
+
+  /* =====================================================
      FETCH PRODUCTS
   ===================================================== */
 
@@ -270,9 +288,12 @@ function Products() {
         category: form.category.trim(),
         barcode: form.barcode.trim(),
 
-        purchasePrice: Number(
-          form.purchasePrice
-        ),
+        purchasePrice: isStaff
+          ? Number(
+              editingProduct?.purchasePrice ??
+                0
+            )
+          : Number(form.purchasePrice),
 
         sellingPrice: Number(
           form.sellingPrice
@@ -1562,15 +1583,17 @@ function Products() {
                 <table className="products-table">
 
                   <colgroup>
-                    <col style={{ width: "23%" }} />
-                    <col style={{ width: "12%" }} />
-                    <col style={{ width: "10%" }} />
-                    <col style={{ width: "10%" }} />
-                    <col style={{ width: "10%" }} />
-                    <col style={{ width: "8%" }} />
-                    <col style={{ width: "8%" }} />
-                    <col style={{ width: "11%" }} />
-                    <col style={{ width: "8%" }} />
+                    <col style={{ width: isStaff ? "26%" : "23%" }} />
+                    <col style={{ width: isStaff ? "13%" : "12%" }} />
+                    {!isStaff && (
+                      <col style={{ width: "10%" }} />
+                    )}
+                    <col style={{ width: isStaff ? "12%" : "10%" }} />
+                    <col style={{ width: isStaff ? "12%" : "10%" }} />
+                    <col style={{ width: isStaff ? "10%" : "8%" }} />
+                    <col style={{ width: isStaff ? "9%" : "8%" }} />
+                    <col style={{ width: isStaff ? "10%" : "11%" }} />
+                    <col style={{ width: isStaff ? "8%" : "8%" }} />
                   </colgroup>
 
                   <thead>
@@ -1585,9 +1608,11 @@ function Products() {
                         Category
                       </th>
 
-                      <th>
-                        Purchase
-                      </th>
+                      {!isStaff && (
+                        <th>
+                          Purchase
+                        </th>
+                      )}
 
                       <th>
                         Selling
@@ -1677,14 +1702,16 @@ function Products() {
                               }
                             </td>
 
-                            {/* PURCHASE */}
+                            {/* PURCHASE - ADMIN ONLY */}
 
-                            <td>
-                              ₹
-                              {money(
-                                product.purchasePrice
-                              )}
-                            </td>
+                            {!isStaff && (
+                              <td>
+                                ₹
+                                {money(
+                                  product.purchasePrice
+                                )}
+                              </td>
+                            )}
 
                             {/* SELLING */}
 
@@ -1945,30 +1972,32 @@ function Products() {
 
                 </div>
 
-                {/* PURCHASE */}
+                {/* PURCHASE - ADMIN ONLY */}
 
-                <div className="form-group">
+                {!isStaff && (
+                  <div className="form-group">
 
-                  <label>
-                    PURCHASE PRICE *
-                  </label>
+                    <label>
+                      PURCHASE PRICE *
+                    </label>
 
-                  <input
-                    name="purchasePrice"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={
-                      form.purchasePrice
-                    }
-                    onChange={
-                      handleChange
-                    }
-                    placeholder="15"
-                    required
-                  />
+                    <input
+                      name="purchasePrice"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={
+                        form.purchasePrice
+                      }
+                      onChange={
+                        handleChange
+                      }
+                      placeholder="15"
+                      required
+                    />
 
-                </div>
+                  </div>
+                )}
 
                 {/* SELLING */}
 

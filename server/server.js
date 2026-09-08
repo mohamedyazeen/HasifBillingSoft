@@ -1,5 +1,17 @@
 require("dotenv").config();
 
+/* =====================================================
+   DNS FIX FOR MONGODB ATLAS
+===================================================== */
+
+const dns = require("dns");
+
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
+
+/* =====================================================
+   IMPORTS
+===================================================== */
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -185,10 +197,135 @@ const createAdminUser = async () => {
     console.log(
       "Admin user created successfully."
     );
-
   } catch (error) {
     console.error(
       "Create Admin Error:",
+      error.message
+    );
+
+    throw error;
+  }
+};
+
+/* =====================================================
+   CREATE / REPAIR STAFF USER
+===================================================== */
+
+const createStaffUser = async () => {
+  try {
+    const staffUserId = (
+      process.env.STAFF_USER_ID || "hasifstore"
+    )
+      .trim()
+      .toLowerCase();
+
+    const staffPassword =
+      process.env.STAFF_PASSWORD || "hasif@123";
+
+    /* ===============================================
+       FIND STAFF
+    =============================================== */
+
+    const existingStaff = await User.findOne({
+      userId: staffUserId,
+    });
+
+    /* ===============================================
+       STAFF ALREADY EXISTS
+    =============================================== */
+
+    if (existingStaff) {
+      let changed = false;
+
+      /* ---------------------------------------------
+         REPAIR PASSWORD HASH
+      --------------------------------------------- */
+
+      if (
+        !existingStaff.passwordHash ||
+        typeof existingStaff.passwordHash !== "string"
+      ) {
+        console.log("Staff password hash missing.");
+        console.log("Repairing staff password...");
+
+        const passwordHash = await bcrypt.hash(
+          staffPassword,
+          12
+        );
+
+        existingStaff.passwordHash = passwordHash;
+        changed = true;
+      }
+
+      /* ---------------------------------------------
+         REPAIR STAFF ROLE
+      --------------------------------------------- */
+
+      if (existingStaff.role !== "staff") {
+        existingStaff.role = "staff";
+        changed = true;
+      }
+
+      /* ---------------------------------------------
+         ACTIVATE STAFF
+      --------------------------------------------- */
+
+      if (existingStaff.active !== true) {
+        existingStaff.active = true;
+        changed = true;
+      }
+
+      /* ---------------------------------------------
+         STAFF DOES NOT NEED PASSWORD CHANGE
+      --------------------------------------------- */
+
+      if (existingStaff.mustChangePassword !== false) {
+        existingStaff.mustChangePassword = false;
+        changed = true;
+      }
+
+      if (changed) {
+        await existingStaff.save();
+
+        console.log(
+          "Staff user already exists / repaired."
+        );
+      } else {
+        console.log(
+          "Staff user already exists."
+        );
+      }
+
+      return;
+    }
+
+    /* ===============================================
+       CREATE NEW STAFF
+    =============================================== */
+
+    console.log("Creating staff user...");
+
+    const passwordHash = await bcrypt.hash(
+      staffPassword,
+      12
+    );
+
+    const staff = new User({
+      userId: staffUserId,
+      passwordHash,
+      role: "staff",
+      active: true,
+      mustChangePassword: false,
+    });
+
+    await staff.save();
+
+    console.log(
+      "Staff user created successfully."
+    );
+  } catch (error) {
+    console.error(
+      "Create Staff Error:",
       error.message
     );
 
@@ -210,6 +347,8 @@ const connectDatabase = async () => {
       );
     }
 
+    console.log("Connecting to MongoDB...");
+
     await mongoose.connect(mongoUri, {
       serverSelectionTimeoutMS: 10000,
     });
@@ -223,6 +362,12 @@ const connectDatabase = async () => {
     --------------------------------------------- */
 
     await createAdminUser();
+
+    /* ---------------------------------------------
+       CREATE / REPAIR STAFF
+    --------------------------------------------- */
+
+    await createStaffUser();
 
     return true;
   } catch (error) {
@@ -300,6 +445,8 @@ const startServer = async () => {
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
       );
 
+      console.log("");
+
       console.log(
         "✓ Database connected successfully"
       );
@@ -330,6 +477,10 @@ const startServer = async () => {
 
       console.log(
         "✓ Settings API   : Ready"
+      );
+
+      console.log(
+        "✓ Staff Login    : Ready"
       );
 
       console.log(
@@ -376,7 +527,6 @@ const startServer = async () => {
 
         process.exit(0);
       });
-
     } catch (error) {
       console.error(
         "Shutdown Error:",

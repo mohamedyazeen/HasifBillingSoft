@@ -1,19 +1,23 @@
 import { useState } from "react";
+
 import {
   LogIn,
   Eye,
   EyeOff,
   Store,
-  ShieldCheck,
 } from "lucide-react";
+
 import { loginUser } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
 
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
+  const [userId, setUserId] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
 
   const [showPassword, setShowPassword] =
     useState(false);
@@ -23,6 +27,10 @@ function Login() {
 
   const [error, setError] =
     useState("");
+
+  /* =====================================================
+     LOGIN
+  ===================================================== */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,9 +52,9 @@ function Login() {
         password
       );
 
-      /* ==========================================
+      /* =================================================
          SAVE LOGIN DATA
-      ========================================== */
+      ================================================= */
 
       localStorage.setItem(
         "hasif_token",
@@ -58,16 +66,31 @@ function Login() {
         JSON.stringify(data.user)
       );
 
-      /* ==========================================
-         LOGIN SUCCESS
-         
-         Always go directly to Dashboard.
-         Do NOT check mustChangePassword.
-      ========================================== */
+      localStorage.setItem(
+        "hasif_userId",
+        data.user?.userId || userId
+      );
 
-      navigate("/dashboard", {
-        replace: true,
-      });
+      /* =================================================
+         ROLE BASED LOGIN
+      ================================================= */
+
+      const role =
+        data.user?.role;
+
+      // Staff → Billing
+      if (role === "staff") {
+        navigate("/billing", {
+          replace: true,
+        });
+      }
+
+      // Admin / Manager → Dashboard
+      else {
+        navigate("/dashboard", {
+          replace: true,
+        });
+      }
 
     } catch (error) {
       setError(
@@ -81,10 +104,6 @@ function Login() {
 
   return (
     <>
-      {/* =================================================
-          LOGIN PAGE STYLES
-      ================================================= */}
-
       <style>{`
 
         * {
@@ -124,10 +143,6 @@ function Login() {
             "Segoe UI",
             sans-serif;
         }
-
-        /* =================================================
-           BACKGROUND ORBS
-        ================================================= */
 
         .glass-orb {
           position: absolute;
@@ -173,10 +188,6 @@ function Login() {
             );
         }
 
-        /* =================================================
-           LOGIN CARD
-        ================================================= */
-
         .login-card {
           position: relative;
           z-index: 2;
@@ -186,7 +197,8 @@ function Login() {
 
           padding: 42px 42px 30px;
 
-          border: 1px solid
+          border:
+            1px solid
             rgba(255,255,255,0.95);
 
           border-radius: 30px;
@@ -206,6 +218,7 @@ function Login() {
         }
 
         @keyframes loginCardIn {
+
           from {
             opacity: 0;
             transform: translateY(20px);
@@ -215,11 +228,8 @@ function Login() {
             opacity: 1;
             transform: translateY(0);
           }
-        }
 
-        /* =================================================
-           LOGO
-        ================================================= */
+        }
 
         .login-logo {
           display: flex;
@@ -280,10 +290,6 @@ function Login() {
           letter-spacing: 2px;
         }
 
-        /* =================================================
-           HEADING
-        ================================================= */
-
         .login-heading {
           margin-bottom: 28px;
         }
@@ -314,10 +320,6 @@ function Login() {
 
           line-height: 1.5;
         }
-
-        /* =================================================
-           FORM
-        ================================================= */
 
         .login-form {
           display: flex;
@@ -352,7 +354,8 @@ function Login() {
 
           padding: 0 15px;
 
-          border: 1px solid
+          border:
+            1px solid
             #e1e1df;
 
           border-radius: 13px;
@@ -386,10 +389,6 @@ function Login() {
             rgba(0,0,0,0.05);
         }
 
-        /* =================================================
-           PASSWORD
-        ================================================= */
-
         .password-wrapper {
           position: relative;
 
@@ -406,7 +405,8 @@ function Login() {
           top: 50%;
           right: 7px;
 
-          transform: translateY(-50%);
+          transform:
+            translateY(-50%);
 
           width: 38px;
           height: 38px;
@@ -436,14 +436,11 @@ function Login() {
           color: #111;
         }
 
-        /* =================================================
-           ERROR
-        ================================================= */
-
         .login-error {
           padding: 12px 14px;
 
-          border: 1px solid
+          border:
+            1px solid
             rgba(180,0,0,0.12);
 
           border-radius: 11px;
@@ -459,10 +456,6 @@ function Login() {
 
           line-height: 1.4;
         }
-
-        /* =================================================
-           LOGIN BUTTON
-        ================================================= */
 
         .login-button {
           width: 100%;
@@ -502,7 +495,8 @@ function Login() {
         }
 
         .login-button:hover:not(:disabled) {
-          transform: translateY(-2px);
+          transform:
+            translateY(-2px);
 
           background: #1d1d1d;
 
@@ -512,7 +506,8 @@ function Login() {
         }
 
         .login-button:active:not(:disabled) {
-          transform: translateY(0);
+          transform:
+            translateY(0);
         }
 
         .login-button:disabled {
@@ -521,15 +516,13 @@ function Login() {
           cursor: not-allowed;
         }
 
-        /* =================================================
-           FOOTER
-        ================================================= */
-
         .login-footer {
           margin-top: 28px;
+
           padding-top: 20px;
 
-          border-top: 1px solid
+          border-top:
+            1px solid
             rgba(0,0,0,0.07);
 
           display: flex;
@@ -552,6 +545,7 @@ function Login() {
 
         .login-footer span:last-child {
           display: flex;
+
           align-items: center;
 
           gap: 5px;
@@ -568,10 +562,6 @@ function Login() {
           background: #111;
         }
 
-        /* =================================================
-           MOBILE
-        ================================================= */
-
         @media (max-width: 600px) {
 
           .login-page {
@@ -579,7 +569,8 @@ function Login() {
           }
 
           .login-card {
-            padding: 30px 24px 24px;
+            padding:
+              30px 24px 24px;
 
             border-radius: 24px;
           }
@@ -612,19 +603,16 @@ function Login() {
           .login-footer {
             font-size: 9px;
           }
+
         }
 
       `}</style>
 
-      {/* =================================================
-          PAGE
-      ================================================= */}
-
       <div className="login-page">
 
-        <div className="glass-orb orb-one"></div>
+        <div className="glass-orb orb-one" />
 
-        <div className="glass-orb orb-two"></div>
+        <div className="glass-orb orb-two" />
 
         <div className="login-card">
 
@@ -765,7 +753,7 @@ function Login() {
               </div>
             )}
 
-            {/* BUTTON */}
+            {/* LOGIN BUTTON */}
 
             <button
               type="submit"
